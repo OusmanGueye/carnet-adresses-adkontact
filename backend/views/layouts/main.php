@@ -7,8 +7,7 @@ use backend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+
 
 AppAsset::register($this);
 ?>
@@ -21,52 +20,45 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body class="d-flex flex-column h-100">
+<body>
 <?php $this->beginBody() ?>
 
-<header>
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    }     
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-        'items' => $menuItems,
-    ]);
-    if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
-    } else {
-        echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout text-decoration-none']
-            )
-            . Html::endForm();
+<style>
+    .main {
+        margin-left: 240px; /* Ajuster la marge pour correspondre à la nouvelle largeur du sidenav */
+        font-size: 28px;
+        padding: 20px;
+        background-color: #f4f4f4;
+        min-height: 100vh;
+        transition: margin-left 0.3s; /* Transition pour l'effet de survol du sidenav */
     }
-    NavBar::end();
-    ?>
-</header>
+</style>
 
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</main>
+<div class="wrap">
+
+    <main role="main">
+        <?php echo $this->render('sidebar'); ?>
+
+        <div class="main">
+            <?php echo $this->render('header'); ?> <!-- Inclure le header -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-sm">
+                    <?= Breadcrumbs::widget([
+                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        'options' => ['class' => 'breadcrumb-item']
+                    ]) ?>
+                </ol>
+            </nav>
+
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
+    </main>
+
+</div>
+
 
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
