@@ -22,7 +22,7 @@ AppAsset::register($this);
     <?php $this->head() ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
+<body style="font-size: medium">
 <?php $this->beginBody() ?>
 
 <style>
@@ -44,7 +44,7 @@ AppAsset::register($this);
         <div class="main">
             <?php echo $this->render('header'); ?> <!-- Inclure le header -->
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb breadcrumb-sm">
+                <ol class="breadcrumb breadcrumb-sm mt-4" style="font-size: medium">
                     <?= Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                         'options' => ['class' => 'breadcrumb-item']
@@ -62,8 +62,8 @@ AppAsset::register($this);
 
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
-        <p class="float-start">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-end"><?= Yii::powered() ?></p>
+        <p class="text-center">&copy; AdKontact Group <?= date('Y') ?></p>
+        <p class="float-end">Ousmane</p>
     </div>
 </footer>
 

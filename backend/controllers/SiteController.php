@@ -2,7 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\Contact;
+use common\models\Country;
 use common\models\LoginForm;
+use common\models\User;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -62,7 +65,29 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        // Récupérer le total d'utilisateurs
+        $totalUsers = User::find()->count();
+
+        // Récupérer le total de contacts
+        $totalContacts = Contact::find()->count();
+
+        // Récupérer le total de pays
+        $totalCountries = Country::find()->count();
+
+        $this->view->registerCss("
+            .custom-gradient {
+                background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+                color: white;
+            }
+            /* Ajoutez d'autres styles CSS au besoin */
+        ");
+
+
+        return $this->render('index', [
+            'totalUsers' => $totalUsers,
+            'totalContacts' => $totalContacts,
+            'totalCountries' => $totalCountries,
+        ]);
     }
 
     /**

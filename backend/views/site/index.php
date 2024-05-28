@@ -4,77 +4,92 @@
 
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index mt-4">
-    <h1><?= $this->title ?></h1>
+<div class="site-index mt-4" style="font-size: medium">
     <div class="container">
         <div class="row">
+            <div class="col-sm-6 col-md-3 col-12">
+                <div class="card text-center">
+                    <div class="card-body py-1">
+                        <div class="badge-circle badge-circle-lg badge-circle-light-secondary mx-auto mb-50">
+                            <i class="fas fa-address-book" style="color: #eec66c;"></i>
+                        </div>
+                        <div class="text-muted line-ellipsis">Contact Total</div>
+                        <h3 class="mb-0 font-weight-bold"><?= $totalContacts ?></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3 col-12">
+                <div class="card text-center">
+                    <div class="card-body py-1">
+                        <div class="badge-circle badge-circle-lg badge-circle-light-secondary mx-auto mb-50">
+                            <i class="fas fa-user" style="color: #e56cee;"></i>
+                        </div>
+                        <div class="text-muted line-ellipsis">Utilisateur Total</div>
+                        <h3 class="mb-0 font-weight-bold">  <?= $totalUsers ?></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3 col-12">
+                <div class="card text-center">
+                    <div class="card-body py-1">
+                        <div class="badge-circle badge-circle-lg badge-circle-light-secondary mx-auto mb-50">
+                            <i class="fas fa-user" style="color: #6cee6e;"></i>
+                        </div>
+                        <div class="text-muted line-ellipsis">Pays Total</div>
+                        <h3 class="mb-0 font-weight-bold"> <?= $totalCountries ?></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
             <div class="col-lg-3">
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                        Cras justo odio
+                        Résumé d'activité récente
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                    <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        L'utilisateur Jean a ajouté un nouveau contact
+                        <span class="badge bg-primary">Nouveau</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        L'utilisateur Claire a modifié les détails d'un contact existant
+                        <span class="badge bg-info">Modifié</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        L'utilisateur Marc a supprimé un contact
+                        <span class="badge bg-danger">Supprimé</span>
+                    </a>
+                    <!-- Ajoutez d'autres éléments de liste pour d'autres événements récents -->
                 </div>
-                <?=
-                 "Web Path: " . Yii::getAlias('@web'); ?>
             </div>
             <div class="col-lg-9">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title mb-0">Dashboard</h3>
+                        <h3 class="card-title mb-0">Résumé d'activité récente</h3>
                     </div>
                     <div class="card-body">
-                        <p>Congratulations! You have successfully created your Yii-powered application.</p>
+                        <div>
+                            <div class="list-group">
+                                <?php
+                                $fakeActivities = [
+                                    ['description' => 'L\'utilisateur Jean a ajouté un nouveau contact.', 'time' => 'Il y a 1 heure'],
+                                    ['description' => 'L\'utilisateur Ousmane a supprimer un contact', 'time' => 'Il y a 3 heures'],
+                                    ['description' => 'Le système a été mis à jour vers la version 2.0.', 'time' => 'Il y a 4 heures'],
+                                    ['description' => 'Un message a été reçu de la part de Marie.', 'time' => 'Il y a 15 heures'],
+                                ];
 
-                        <p>You may change the content of this page by modifying the following two files:</p>
-                        <ul>
-                            <li>View file: <code><?= __FILE__; ?></code></li>
-                            <li>Layout file: <code><?= $this->context->layout; ?></code></li>
-                        </ul>
-
-                        <div class="alert alert-success">
-                            <h4>Get started with Yii</h4>
-                            <p>Yii encourages best practices in programming and allows you to develop applications quite easily.</p>
+                                foreach ($fakeActivities as $activity): ?>
+                                    <div class="list-group-item ">
+                                        <p><?= $activity['description'] ?></p>
+                                        <small class="text-muted"><?= $activity['time'] ?></small>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
-
-                        <h3>Useful Links</h3>
-                        <ul>
-                            <li><a href="https://www.yiiframework.com/doc/guide/2.0/en/start-installation">Yii Documentation</a></li>
-                            <li><a href="https://www.yiiframework.com/extensions/">Yii Extensions</a></li>
-                            <li><a href="http://www.yiiframework.com/forum/">Yii Forum</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Dashboard</h3>
-        </div>
-        <div class="card-body">
-            <p>Congratulations! You have successfully created your Yii-powered application.</p>
-
-            <p>You may change the content of this page by modifying the following two files:</p>
-            <ul>
-                <li>View file: <code><?= __FILE__; ?></code></li>
-                <li>Layout file: <code><?= $this->context->layout; ?></code></li>
-            </ul>
-
-            <div class="alert alert-success">
-                <h4>Get started with Yii</h4>
-                <p>Yii encourages best practices in programming and allows you to develop applications quite easily.</p>
-            </div>
-
-            <h3>Useful Links</h3>
-            <ul>
-                <li><a href="https://www.yiiframework.com/doc/guide/2.0/en/start-installation">Yii Documentation</a></li>
-                <li><a href="https://www.yiiframework.com/extensions/">Yii Extensions</a></li>
-                <li><a href="http://www.yiiframework.com/forum/">Yii Forum</a></li>
-            </ul>
-        </div>
-    </div>
 </div>
+

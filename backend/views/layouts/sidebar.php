@@ -11,10 +11,10 @@ use yii\helpers\Html; ?>
     <?php
     $currentUrl = Yii::$app->request->url;
     ?>
-    <a href="" class="<?= $currentUrl == Yii::$app->homeUrl ? 'active' : '' ?>"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="<?= Yii::$app->urlManager->createUrl('site/index') ?>" class="<?= $currentUrl == Yii::$app->urlManager->createUrl('site/index') ? 'active' : '' ?>"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="/user" class="<?= $currentUrl == Yii::$app->urlManager->createUrl('user') ? 'active' : '' ?>"><i class="fas fa-user"></i> Utilisateur</a>
     <a href="<?= Yii::$app->urlManager->createUrl('country') ?>" class="<?= $currentUrl == Yii::$app->urlManager->createUrl('country') ? 'active' : '' ?>"><i class="fas fa-flag"></i> Pays</a>
     <a href="<?= Yii::$app->urlManager->createUrl('contact') ?>" class="<?= $currentUrl == Yii::$app->urlManager->createUrl('contact') ? 'active' : '' ?>"><i class="fas fa-address-book"></i> Contact</a>
-    <a href="/user" class="<?= $currentUrl == Yii::$app->urlManager->createUrl('user') ? 'active' : '' ?>"><i class="fas fa-user"></i> Utilisateur</a>
 </div>
 
 

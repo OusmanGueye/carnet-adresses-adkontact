@@ -29,6 +29,43 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public static function getStatusBadgeClass($status)
+    {
+        switch ($status) {
+            case self::STATUS_ACTIVE:
+                return 'badge bg-success'; // Vert pour actif
+            case self::STATUS_INACTIVE:
+                return 'badge bg-warning'; // Jaune pour inactif
+            case self::STATUS_DELETED:
+                return 'badge bg-danger'; // Rouge pour supprimé
+            default:
+                return 'badge bg-secondary'; // Gris pour inconnu
+        }
+    }
+
+    public static function getStatusLabel($status)
+    {
+        switch ($status) {
+            case self::STATUS_ACTIVE:
+                return 'Actif';
+            case self::STATUS_INACTIVE:
+                return 'Inactif';
+            case self::STATUS_DELETED:
+                return 'Supprimé';
+            default:
+                return 'Inconnu';
+        }
+    }
+
+    public static function getStatusList()
+    {
+        return [
+            self::STATUS_ACTIVE => 'Actif',
+            self::STATUS_INACTIVE => 'Inactif',
+            self::STATUS_DELETED => 'Supprimé',
+        ];
+    }
+
 
     /**
      * {@inheritdoc}

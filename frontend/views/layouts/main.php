@@ -32,6 +32,7 @@ AppAsset::register($this);
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            'style' => 'background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);', // Ajoutez le dégradé de couleurs en CSS personnalisé
         ],
     ]);
     $menuItems = [
@@ -40,7 +41,7 @@ AppAsset::register($this);
 //        ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        //$menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
     }
 
     echo Nav::widget([

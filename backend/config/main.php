@@ -13,7 +13,7 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'language' => 'fr-FR',
-    'name' => 'Carnet d\'adresses AdKonect',
+    'name' => 'Carnet d\'adresses AdKontact',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

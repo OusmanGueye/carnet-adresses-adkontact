@@ -6,3 +6,9 @@
     min-height: 100vh;
     transition: margin-left 0.3s; /* Transition pour l'effet de survol du sidenav */
 }
+
+.custom-gradient {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white; /* Assurez-vous que la couleur du texte est lisible */
+    /* Ajoutez d'autres styles CSS au besoin */
+}

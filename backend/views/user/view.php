@@ -1,5 +1,6 @@
 <?php
 
+use common\models\User;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -11,35 +12,48 @@ $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="user-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="card">
+    <div class="card-body">
+        <div class="user-view" style="font-size: medium">
+            <p class="float-end">
+                <?= Html::a('Modifier', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Supprimer', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Are you sure you want to delete this item?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
+            </p>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'id',
+                    'username',
+                    'email:email',
+                    [
+                        'attribute' => 'status',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            $badgeClass = User::getStatusBadgeClass($model->status);
+                            $statusLabel = User::getStatusLabel($model->status);
+                            return Html::tag('span', $statusLabel, ['class' => $badgeClass]);
+                        },
+                    ],
+                    [
+                        'attribute' => 'created_at',
+                        'format' => ['date', 'php:d M Y H:i:s'],
+                    ],
+                    [
+                        'attribute' => 'updated_at',
+                        'format' => ['date', 'php:d M Y H:i:s'],
+                    ],
+                ],
+            ]) ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
-            'email:email',
-            'status',
-            'created_at',
-            'updated_at',
-            'verification_token',
-        ],
-    ]) ?>
-
+        </div>
+    </div>
 </div>
+

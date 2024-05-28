@@ -19,8 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="card">
         <div class="card-body">
-            <p>
-                <?= Html::a('Nouveau Utilisateur', ['create'], ['class' => 'btn btn-success']) ?>
+            <p class="mb-4">
+                <?= Html::a('Nouveau Utilisateur', ['create'], ['class' => 'btn btn-success float-end custom-gradient']) ?>
             </p>
 
             <?= GridView::widget([
@@ -31,8 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'email:email',
                     [
                         'attribute' => 'status',
+                        'format' => 'html',
                         'value' => function ($model) {
-                            return $model->status == User::STATUS_ACTIVE ? 'Active' : 'Inactive';
+                            $badgeClass = User::getStatusBadgeClass($model->status);
+                            $statusLabel = User::getStatusLabel($model->status);
+                            return Html::tag('span', $statusLabel, ['class' => $badgeClass]);
                         },
                     ],
                     [
@@ -43,12 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{view} {update} {delete} {assign-role}',
                         'buttons' => [
                             'assign-role' => function ($url, $model, $key) {
-                                return Html::a('Assign Role', ['assign-role', 'id' => $model->id], [
-                                    'title' => 'Assign Role',
+                                return Html::a('<i class="fas fa-user-lock"></i> Droit d\'accès', ['assign-role', 'id' => $model->id], [
+                                    'title' => 'Définir les droits d\'accès',
                                     'class' => 'btn btn-primary btn-sm',
                                     'data-bs-toggle' => 'modal',
                                     'data-bs-target' => '#assignRoleModal',
                                     'data-id' => $model->id,
+                                    'style' => 'margin-left: 10px;'
                                 ]);
                             },
                         ],
@@ -57,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]); ?>
         </div>
     </div>
+
 </div>
 
 <?php
