@@ -3,8 +3,10 @@
 namespace backend\controllers;
 
 use common\models\Country;
+
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Console;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,6 +25,7 @@ class CountryController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -40,6 +43,7 @@ class CountryController extends Controller
      */
     public function actionIndex()
     {
+
         $dataProvider = new ActiveDataProvider([
             'query' => Country::find(),
             /*
@@ -150,24 +154,31 @@ class CountryController extends Controller
     public function actionAjaxUpdate()
     {
         $model = Country::findOne(Yii::$app->request->post('id'));
+        //$model = $this->findModel($id);
         if (Yii::$app->request->isAjax && $model) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->name = Yii::$app->request->post('name');
+
+            if ($model->save()) {
                 return [
                     'data' => [
                         'success' => true,
-                        'model' => $model,
+                        'id' => $model->id,
+                        'name' => $model->name,
                         'message' => 'Model has been updated.',
                     ],
                     'code' => 0,
                 ];
             } else {
+                $errors = $model->getErrors();
                 return [
                     'data' => [
                         'success' => false,
                         'model' => null,
+                        'country' => Yii::$app->request->post(),
                         'message' => 'An error occurred.',
+                        'errors' => $errors,
                     ],
                     'code' => 1,
                 ];
@@ -228,7 +239,42 @@ class CountryController extends Controller
         }
     }
 
+    // delete  country whith ajax
+    public function actionAjaxDelete($id)
+    {
+        // Vérifiez si la demande est une requête AJAX
+        if (!Yii::$app->request->isAjax ) {
+            throw new \yii\web\BadRequestHttpException('Cette action ne peut être accédée que via AJAX.');
+        }
 
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $country = Country::findOne($id);
+        if ($country !== null) {
+            if ($country->delete()) {
+                return [
+                    'data' => [
+                        'success' => true,
+                        'message' => 'Le pays a été supprimé avec succès.',
+                    ],
+                ];
+            } else {
+                return [
+                    'data' => [
+                        'success' => false,
+                        'message' => 'Échec de la suppression du pays.',
+                    ],
+                ];
+            }
+        } else {
+            return [
+                'data' => [
+                    'success' => false,
+                    'message' => 'Pays non trouvé.',
+                ],
+            ];
+        }
+    }
 
     /**
      * Deletes an existing Country model.

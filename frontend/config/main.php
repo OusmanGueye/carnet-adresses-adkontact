@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'name' => 'AdKontact Group',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -43,6 +44,7 @@ return [
             'rules' => [
             ],
         ],
+
 
     ],
     'params' => $params,

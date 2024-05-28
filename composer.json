@@ -15,9 +15,10 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4.0",
-        "yiisoft/yii2": "~2.0.45",
+        "yiisoft/yii2": "^2.0",
         "yiisoft/yii2-bootstrap5": "~2.0.2",
-        "yiisoft/yii2-symfonymailer": "~2.0.3"
+        "yiisoft/yii2-symfonymailer": "~2.0.3",
+        "mdmsoft/yii2-admin": "~2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -36,7 +37,9 @@
         "psr-4": {
             "common\\tests\\": ["common/tests/", "common/tests/_support"],
             "backend\\tests\\": ["backend/tests/", "backend/tests/_support"],
-            "frontend\\tests\\": ["frontend/tests/", "frontend/tests/_support"]
+            "frontend\\tests\\": ["frontend/tests/", "frontend/tests/_support"],
+
+
         }
     },
     "config": {
