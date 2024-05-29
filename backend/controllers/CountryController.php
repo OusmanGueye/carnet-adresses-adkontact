@@ -6,6 +6,7 @@ use common\models\Country;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\helpers\Console;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -30,6 +31,15 @@ class CountryController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
                     ],
                 ],
             ]

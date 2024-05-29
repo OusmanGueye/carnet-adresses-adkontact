@@ -35,6 +35,12 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        // Restriction pour les actions spécifiques aux administrateurs
+                        'actions' => ['index'], // Remplacez par les actions réservées aux administrateurs
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
                 ],
             ],
             'verbs' => [
