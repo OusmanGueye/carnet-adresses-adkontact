@@ -66,10 +66,27 @@ class Contact extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return \common\models\query\ContactQuery the active query used by this AR class.
+     * @return \yii\db\ActiveQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \common\models\query\ContactQuery(get_called_class());
+       return parent::find()->where(['is_deleted' => false]);
+    }
+
+    public function softDelete()
+    {
+        $this->is_deleted = true;
+        return $this->save(false, ['is_deleted']);
+    }
+
+    public function delete()
+    {
+        return $this->softDelete();
+    }
+
+    public function restore()
+    {
+        $this->is_deleted = false;
+        return $this->save(false, ['is_deleted']);
     }
 }

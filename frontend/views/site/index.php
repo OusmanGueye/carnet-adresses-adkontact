@@ -52,10 +52,10 @@ $this->title = 'My Yii Application';
                                     },
                                     'visibleButtons' => [
                                         'update' => function ($model, $key, $index) {
-                                            return Yii::$app->user->can('moderator') || Yii::$app->user->can('admin'); // Vérifie si l'utilisateur a le rôle "moderator" ou "admin"
+                                            return Yii::$app->user->can('manageContacts'); // Vérifie si l'utilisateur a le rôle "moderator" ou "admin"
                                         },
                                         'delete' => function ($model, $key, $index) {
-                                            return Yii::$app->user->can('admin'); // Vérifie si l'utilisateur a le rôle "admin"
+                                            return Yii::$app->user->can('manageContacts'); // Vérifie si l'utilisateur a le rôle "admin"
                                         },
                                         // Ajoutez ici d'autres boutons si nécessaire, par exemple 'delete' => ...
                                     ],

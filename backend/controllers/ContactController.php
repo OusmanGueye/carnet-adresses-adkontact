@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Contact;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -49,21 +50,16 @@ class ContactController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Contact::find()->with('country'),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
+            'query' => Contact::find()->where(['is_deleted' => false]),
+        ]);
+
+        $deletedDataProvider = new ActiveDataProvider([
+            'query' => Contact::find()->where(['is_deleted' => true]),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'deletedDataProvider' => $deletedDataProvider,
         ]);
     }
 
@@ -127,12 +123,27 @@ class ContactController extends Controller
      * Deletes an existing Contact model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return \yii\web\Response
+     * @return Contact
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    protected function findDeletedModel($id)
     {
-        $this->findModel($id)->delete();
+        if (($model = Contact::findOne(['id' => $id, 'is_deleted' => true])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionRestore($id)
+    {
+        $model = $this->findDeletedModel($id);
+        if ($model !== null) {
+            $model->restore();
+            Yii::$app->session->setFlash('success', 'Contact has been restored.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Contact not found or is not deleted.');
+        }
 
         return $this->redirect(['index']);
     }
