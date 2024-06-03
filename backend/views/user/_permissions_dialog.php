@@ -10,15 +10,14 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="assign-role-form">
-
     <?php $form = ActiveForm::begin(['action' => ['user/assign-permissions'], 'id' => 'permissions-form']); ?>
 
     <?= Html::hiddenInput('role', $roleName) ?>
 
+    <h4>Permissions</h4>
     <div class="row">
-        <div class="col-md-6">
-            <h4>Permissions</h4>
-            <?php foreach ($allPermissions as $permission): ?>
+        <?php foreach ($allPermissions as $permission): ?>
+            <div class="col-md-6">
                 <div class="form-check">
                     <?= Html::checkbox('permissions[]', isset($rolePermissions[$permission->name]), [
                         'value' => $permission->name,
@@ -27,8 +26,8 @@ use yii\widgets\ActiveForm;
                     ]) ?>
                     <?= Html::label($permission->name, 'permission-' . $permission->name, ['class' => 'form-check-label']) ?>
                 </div>
-            <?php endforeach; ?>
-        </div>
+            </div>
+        <?php endforeach; ?>
     </div>
 
     <div class="form-group mt-3">
@@ -36,7 +35,6 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>
 
 <script>

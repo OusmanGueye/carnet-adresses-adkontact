@@ -22,7 +22,7 @@ $this->title = 'My Yii Application';
                     <?php if (!Yii::$app->user->isGuest): ?>
                         <h1 class="display-4">Bienvenue sur notre plateforme de gestion des contacts de AdKontact Group</h1>
                         <p class="lead">Vous pouvez consulter, ajouter, modifier ou supprimer les contacts de l'entreprise.</p>
-                        <?php if (Yii::$app->user->can('admin')): ?>
+                        <?php if (Yii::$app->user->can('contact-create')): ?>
                             <p>
                                 <?= Html::a('Ajouter un Contact', ['create'], ['class' => 'btn btn-primary']) ?>
                             </p>
@@ -51,15 +51,32 @@ $this->title = 'My Yii Application';
                                         return Url::toRoute([$action, 'id' => $model->id]);
                                     },
                                     'visibleButtons' => [
+                                        'view' => function ($model, $key, $index) {
+                                            return Yii::$app->user->can('contact-read'); // Vérifie si l'utilisateur a le rôle "moderator" ou "admin"
+                                        },
                                         'update' => function ($model, $key, $index) {
-                                            return Yii::$app->user->can('manageContacts'); // Vérifie si l'utilisateur a le rôle "moderator" ou "admin"
+                                            return Yii::$app->user->can('contact-update'); // Vérifie si l'utilisateur a le rôle "moderator" ou "admin"
                                         },
                                         'delete' => function ($model, $key, $index) {
-                                            return Yii::$app->user->can('manageContacts'); // Vérifie si l'utilisateur a le rôle "admin"
+                                            return Yii::$app->user->can('contact-delete'); // Vérifie si l'utilisateur a le rôle "admin"
                                         },
                                         // Ajoutez ici d'autres boutons si nécessaire, par exemple 'delete' => ...
                                     ],
                                 ],
+                            ],
+                            'pager' => [
+                                'class' => yii\widgets\LinkPager::className(),
+                                'prevPageLabel' => 'Précédent',
+                                'nextPageLabel' => 'Suivant',
+                                'maxButtonCount' => 5, // Nombre maximum de boutons de page à afficher
+                                'options' => [
+                                    'class' => 'pagination', // Classe CSS pour la pagination
+                                ],
+                                'linkOptions' => [
+                                    'class' => 'page-link page-item', // Classe CSS pour les liens de pagination
+                                ],
+                                'activePageCssClass' => 'active', // Classe CSS pour la page active
+                                'disabledPageCssClass' => 'disabled', // Classe CSS pour les pages désactivées
                             ],
                         ]); ?>
 

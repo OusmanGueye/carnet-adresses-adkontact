@@ -9,17 +9,22 @@ use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var yii\data\ActiveDataProvider $deletedDataProvider */
 
 $this->title = 'Contacts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="contact-index" style="font-size: medium">
 
+    <h3>Liste Contacts</h3>
+
     <div class="card">
         <div class="card-body">
-            <h1><?= Html::encode($this->title) ?></h1>
 
-            <?= Html::a('Create Contact', ['create'], ['class' => 'btn btn-success mb-3']) ?>
+            <p>
+                <?= Html::a('Create Contact', ['create'], ['class' => 'btn btn-success float-end mb-3']) ?>
+            </p>
+
 
             <?php
             echo Tabs::widget([

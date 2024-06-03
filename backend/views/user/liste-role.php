@@ -11,42 +11,46 @@ $this->title = 'Liste des Rôles';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="role-index">
+<div class="role-index" style="font-size: medium">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="card">
+        <div class="card-body">
+            <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Créer un Rôle', ['create-role'], ['class' => 'btn btn-success']) ?>
-    </p>
+            <p>
+                <?= Html::a('Créer un Rôle', ['create-role'], ['class' => 'btn btn-success']) ?>
+            </p>
 
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Nom du Rôle</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($roles as $role): ?>
-            <tr>
-                <td><?= Html::encode($role->name) ?></td>
-                <td><?= Html::encode($role->description) ?></td>
-                <td>
-                    <?= Html::a('Modifier', ['user/update-role', 'name' => $role->name], ['class' => 'btn btn-primary']) ?>
-                    <?= Html::a('Supprimer', ['user/delete-role', 'name' => $role->name], [
-                        'class' => 'btn btn-danger',
-                        'id' => 'delete-button'
-                    ]) ?>
-                    <?= Html::button('Gérer les Permissions', [
-                        'class' => 'btn btn-primary manage-permissions-button',
-                        'data-role' => $role->name,
-                    ]) ?>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Nom du Rôle</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($roles as $role): ?>
+                    <tr>
+                        <td><?= Html::encode($role->name) ?></td>
+                        <td><?= Html::encode($role->description) ?></td>
+                        <td>
+                            <?= Html::a('Modifier', ['user/update-role', 'name' => $role->name], ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a('Supprimer', ['user/delete-role', 'name' => $role->name], [
+                                'class' => 'btn btn-danger',
+                                'id' => 'delete-button'
+                            ]) ?>
+                            <?= Html::button('Gérer les Permissions', [
+                                'class' => 'btn btn-primary manage-permissions-button',
+                                'data-role' => $role->name,
+                            ]) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <?php
     Modal::begin([
@@ -85,8 +89,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     .catch(error => console.error('Error loading permissions:', error));
             });
         });
-
-
     });
 </script>
 

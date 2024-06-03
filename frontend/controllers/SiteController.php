@@ -79,16 +79,15 @@ class SiteController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Contact::find()->with('country'),
-            /*
             'pagination' => [
-                'pageSize' => 50
+                'pageSize' => 5
             ],
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC,
                 ]
             ],
-            */
+
         ]);
 
         return $this->render('index', [

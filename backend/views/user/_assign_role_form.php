@@ -9,13 +9,12 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="assign-role-form">
-
     <?php $form = ActiveForm::begin(['action' => ['user/assign-role', 'id' => $user->id], 'id' => 'assign-role-form']); ?>
 
+    <h4>Roles for <?= Html::encode($user->username) ?></h4>
     <div class="row">
-        <div class="col-md-12">
-            <h4>Roles for <?= Html::encode($user->username) ?></h4>
-            <?php foreach ($allRoles as $role): ?>
+        <?php foreach ($allRoles as $role): ?>
+            <div class="col-md-4">
                 <div class="form-check">
                     <?= Html::checkbox('roles[]', isset($userRoles[$role->name]), [
                         'value' => $role->name,
@@ -24,8 +23,8 @@ use yii\widgets\ActiveForm;
                     ]) ?>
                     <?= Html::label($role->name, 'role-' . $role->name, ['class' => 'form-check-label']) ?>
                 </div>
-            <?php endforeach; ?>
-        </div>
+            </div>
+        <?php endforeach; ?>
     </div>
 
     <div class="form-group mt-3">
@@ -33,5 +32,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

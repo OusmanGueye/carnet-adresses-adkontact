@@ -1,5 +1,4 @@
 <?php
-
 namespace backend\controllers;
 
 use common\models\Contact;
@@ -10,27 +9,21 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * ContactController implements the CRUD actions for Contact model.
- */
 class ContactController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
                 ],
                 'access' => [
-                    'class' => AccessControl::className(),
+                    'class' => AccessControl::class,
                     'rules' => [
                         [
                             'allow' => true,
@@ -42,15 +35,10 @@ class ContactController extends Controller
         );
     }
 
-    /**
-     * Lists all Contact models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Contact::find()->where(['is_deleted' => false]),
+            'query' => Contact::find(),
         ]);
 
         $deletedDataProvider = new ActiveDataProvider([
@@ -63,13 +51,6 @@ class ContactController extends Controller
         ]);
     }
 
-
-    /**
-     * Displays a single Contact model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -77,19 +58,12 @@ class ContactController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Contact model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new Contact();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             $model->loadDefaultValues();
         }
@@ -99,13 +73,6 @@ class ContactController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Contact model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -119,45 +86,41 @@ class ContactController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Contact model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return Contact
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findDeletedModel($id)
+    public function actionDelete($id)
     {
-        if (($model = Contact::findOne(['id' => $id, 'is_deleted' => true])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function actionRestore($id)
-    {
-        $model = $this->findDeletedModel($id);
-        if ($model !== null) {
-            $model->restore();
-            Yii::$app->session->setFlash('success', 'Contact has been restored.');
+        $model = $this->findModel($id);
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('success', 'Contact has been deleted.');
         } else {
-            Yii::$app->session->setFlash('error', 'Contact not found or is not deleted.');
+            Yii::$app->session->setFlash('error', 'Failed to delete contact.');
         }
 
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Contact model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Contact the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    public function actionRestore($id)
+    {
+
+        $contact = Contact::find()->where(['id' => $id, 'is_deleted' => 1])->one();
+
+        if ($contact !== null) {
+            if ($contact->restore()) {
+                // Succès
+                Yii::$app->session->setFlash('success', 'Contact has been restored.');
+            } else {
+                // Échec
+                Yii::$app->session->setFlash('error', 'Failed to restore contact.');
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'Error System.');
+        }
+
+        return $this->redirect(['index']);
+    }
+
     protected function findModel($id)
     {
-        if (($model = Contact::findOne(['id' => $id])) !== null) {
+        if (($model = Contact::findOne(['id' => $id, 'is_deleted' => false])) !== null) {
             return $model;
         }
 

@@ -21,50 +21,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
 <!--        --><?php //= Html::a('Ajouter Pays', ['create'], ['class' => 'btn btn-success ']) ?>
-        <a id="add-country-btn" class="btn btn-success">Ajouter Pays</a>
-    </p>
+        <a id="add-country-btn" class="btn mb-4 float-end btn-success">Ajouter Pays</a>
+    </p><br>
 
     <div class="card">
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover" id="country-table-body">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($dataProvider->models as $index => $country) : ?>
-                        <tr id="country-row-<?= $country->id ?>">
-                            <th scope="row"><?= $index + 1 ?></th>
-                            <td id="country-row-name-<?= $country->id ?>"><?= Html::encode($country->name) ?></td>
-                            <td>
-                                <?= Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $country->id], ['class' => 'btn btn-sm btn-primary', 'title' => 'View']) ?>
-<!--                                --><?php //= Html::a('<i class="fas fa-pencil-alt"></i>', ['update', 'id' => $country->id], ['class' => 'btn btn-sm btn-warning', 'title' => 'Update']) ?>
-<!--                                --><?php //= Html::a('<i class="fas fa-trash-alt"></i>', ['delete', 'id' => $country->id], [
-//                                    'class' => 'btn btn-sm btn-danger',
-//                                    'title' => 'Delete',
-//                                    'data' => [
-//                                        'confirm' => 'Are you sure you want to delete this item?',
-//                                        'method' => 'post',
-//                                    ],
-//                                ]) ?>
-                                <button type="button" class="btn btn-sm btn-warning open-update-modal" data-country-id="<?= $country->id ?>" data-name="<?= $country->name ?>" title="Update">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </button>
-                                <button type="button" id="delete-ajax" class="btn btn-sm btn-danger delete-ajax" data-country="<?= $country->id ?>" title="Delete">
-                                     <i class="fas fa-trash-alt"></i>
-                                </button>
-
-                            </td>
-
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'name',
+                    [
+                        'class' => ActionColumn::className(),
+                        'urlCreator' => function ($action, $model, $key, $index) {
+                            return Url::toRoute([$action, 'id' => $model->id]);
+                        },
+                        'template' => '{view} {update} {delete}',
+                        'visibleButtons' => [
+                            'view' => function ($model, $key, $index) {
+                                return Yii::$app->user->can('country-read');
+                            },
+                            'update' => function ($model, $key, $index) {
+                                return Yii::$app->user->can('country-update');
+                            },
+                            'delete' => function ($model, $key, $index) {
+                                return Yii::$app->user->can('country-delete');
+                            },
+                        ],
+                    ],
+                ],
+            ]); ?>
         </div>
     </div>
 

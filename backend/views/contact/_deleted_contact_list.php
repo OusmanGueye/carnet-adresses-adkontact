@@ -32,7 +32,7 @@ use common\models\Contact;
             'template' => '{restore}',
             'buttons' => [
                 'restore' => function ($url, $model, $key) {
-                    return Html::a('Restore', ['restore', 'id' => $model->id], [
+                    return Html::a('Restore', ['contact/restore', 'id' => $model->id], [
                         'class' => 'btn btn-success btn-sm',
                         'data-method' => 'post',
                         'data-confirm' => 'Are you sure you want to restore this contact?',
