@@ -44,6 +44,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             return Url::toRoute([$action, 'id' => $model->id]);
                         },
                         'template' => '{view} {update} {delete} {assign-role}',
+                        'visibleButtons' => [
+                            'view' => function ($model, $key, $index) {
+                                return Yii::$app->user->can('user-view');
+                            },
+                            'update' => function ($model, $key, $index) {
+                                return Yii::$app->user->can('update-user');
+                            },
+                            'delete' => function ($model, $key, $index) {
+                                return Yii::$app->user->can('delete-user');
+                            },
+                            'assign-role' => function ($model, $key, $index) {
+                                return Yii::$app->user->can('create-user');
+                            },
+                        ],
                         'buttons' => [
                             'assign-role' => function ($url, $model, $key) {
                                 return Html::a('<i class="fas fa-user-lock"></i> Droit d\'accès', ['assign-role', 'id' => $model->id], [

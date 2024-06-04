@@ -19,10 +19,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1>Liste des pays</h1>
 
-    <p>
-<!--        --><?php //= Html::a('Ajouter Pays', ['create'], ['class' => 'btn btn-success ']) ?>
-        <a id="add-country-btn" class="btn mb-4 float-end btn-success">Ajouter Pays</a>
-    </p><br>
+<!--    <p>-->
+<!--<!--        -->--><?php ////= Html::a('Ajouter Pays', ['create'], ['class' => 'btn btn-success ']) ?>
+<!--       -->
+<!--    </p>-->
+    <?php if (Yii::$app->user->can('country-create')): ?>
+        <p>
+            <a id="add-country-btn" class="btn mb-1 btn-success">Ajouter Pays</a>
+        </p>
+    <?php endif; ?>
 
     <div class="card">
         <div class="card-body">

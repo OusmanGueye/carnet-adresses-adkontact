@@ -17,6 +17,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
@@ -178,6 +179,7 @@ class SiteController extends Controller
         ]);
     }
 
+
     /**
      * Displays about page.
      *
@@ -229,6 +231,7 @@ class SiteController extends Controller
         ]);
     }
 
+
     /**
      * Resets password.
      *
@@ -255,6 +258,7 @@ class SiteController extends Controller
         ]);
     }
 
+
     /**
      * Verify email address
      *
@@ -278,6 +282,7 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+
     /**
      * Resend verification email
      *
@@ -299,6 +304,7 @@ class SiteController extends Controller
         ]);
     }
 
+
     public function actionUpdate($id)
     {
         $model = Contact::findOne($id);
@@ -311,4 +317,29 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('success', 'Contact has been deleted.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Failed to delete contact.');
+        }
+
+        return $this->redirect(['index']);
+    }
+
+
+    protected function findModel($id)
+    {
+        if (($model = Contact::findOne(['id' => $id, 'is_deleted' => false])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
 }

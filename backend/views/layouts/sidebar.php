@@ -71,7 +71,7 @@ use yii\helpers\Html; ?>
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Addons
+        Application
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
@@ -98,20 +98,20 @@ use yii\helpers\Html; ?>
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl('user') ?>">
-            <i class="fas fa-fw fa-table"></i>
+            <i class="fas fa-users"></i>
             <span>Utilisateur</span></a>
     </li>
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="country">
-            <i class="fas fa-fw fa-chart-area"></i>
+        <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl('country') ?>">
+            <i class="fas fa-flag-checkered"></i>
             <span>Pays</span></a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="contact">
-            <i class="fas fa-fw fa-table"></i>
+        <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl('contact') ?>">
+            <i class="fas fa-contact-card"></i>
             <span>Contact</span></a>
     </li>
 
