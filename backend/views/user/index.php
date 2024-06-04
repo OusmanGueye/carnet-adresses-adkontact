@@ -89,19 +89,31 @@ echo '<div id="assignRoleContent"></div>';
 
 Modal::end();
 
-$this->registerJs("
-    $('#assignRoleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var userId = button.data('id');
-        var modal = $(this);
+?>
 
-        $.ajax({
-            url: '" . Url::to(['user/assign-role']) . "',
-            data: { id: userId },
-            success: function (data) {
-                modal.find('#assignRoleContent').html(data);
-            }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#assignRoleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var userId = button.data('id');
+            var modal = $(this);
+
+            // Clear modal content before loading new data
+            modal.find('#assignRoleContent').html('');
+
+            // Fetch permissions data via AJAX
+            $.ajax({
+                url: "<?= Url::to(['user/assign-role']) ?>",
+                data: { id: userId },
+                success: function (data) {
+                    modal.find('#assignRoleContent').html(data);
+                },
+                error: function () {
+                    modal.find('#assignRoleContent').html('<div class="alert alert-danger">Unable to load roles.</div>');
+                }
+            });
         });
     });
-");
-?>
+
+</script>
