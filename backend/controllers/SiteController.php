@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\enum\Permissions;
 use common\models\Contact;
 use common\models\Country;
 use common\models\LoginForm;
@@ -31,7 +32,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -39,7 +40,7 @@ class SiteController extends Controller
                         // Restriction pour les actions spécifiques aux administrateurs
                         'actions' => ['index'], // Remplacez par les actions réservées aux administrateurs
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'roles' => [Permissions::VIEW_DASHBOARD],
                     ],
                 ],
             ],

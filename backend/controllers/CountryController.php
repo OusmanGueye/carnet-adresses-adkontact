@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\enum\Permissions;
 use common\models\Country;
 
 use Yii;
@@ -37,8 +38,24 @@ class CountryController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
+                            'actions' => ['index'],
                             'allow' => true,
-                            'roles' => ['admin'],
+                            'roles' => [Permissions::COUNTRY_READ],
+                        ],
+                        [
+                            'actions' => ['create', 'ajax'],
+                            'allow' => true,
+                            'roles' => [Permissions::COUNTRY_CREATE],
+                        ],
+                        [
+                            'actions' => ['view'],
+                            'allow' => true,
+                            'roles' => [Permissions::COUNTRY_READ],
+                        ],
+                        [
+                            'actions' => ['update'],
+                            'allow' => true,
+                            'roles' => [Permissions::COUNTRY_UPDATE],
                         ],
                     ],
                 ],

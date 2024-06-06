@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\enum\Permissions;
 use common\models\AuthItem;
 use common\models\RoleForm;
 use common\models\User;
@@ -38,8 +39,19 @@ class UserController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
+                            'actions' => ['index', 'liste-role', 'manage-permissions', 'create-role', 'assign-permissions', 'assign-role', 'view'],
                             'allow' => true,
-                            'roles' => ['admin'],
+                            'roles' => [Permissions::MANAGE_USER],
+                        ],
+                        [
+                            'actions' => ['create'],
+                            'allow' => true,
+                            'roles' => [Permissions::CREATE_USER],
+                        ],
+                        [
+                            'actions' => ['update'],
+                            'allow' => true,
+                            'roles' => [Permissions::UPDATE_USER],
                         ],
                     ],
                 ],
